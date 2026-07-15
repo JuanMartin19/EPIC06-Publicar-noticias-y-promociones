@@ -1,0 +1,9 @@
+.category-tab {
+  border-radius: 999px;
+  padding: 10px 24px;
+  transition: transform 0.15s ease;
+}
+
+.category-tab:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,9 @@
+.help-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.help-card:hover {
+  transform: translateY(-4px);
+}

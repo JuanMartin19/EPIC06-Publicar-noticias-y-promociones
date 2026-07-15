@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthContext';
 import '../../assets/css/Sidebar.css';
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+
   const navLinkStyle = {
     transition: 'all 0.3s ease',
     borderRadius: '8px',
@@ -19,8 +22,8 @@ const Sidebar = () => {
           { to: '/admin/cotizaciones', icon: 'bi-file-earmark-text', label: 'Cotizaciones' },
         ].map((item, index) => (
           <li className="nav-item mb-1" key={index}>
-            <Link 
-              className="nav-link text-white px-3 py-2 custom-hover" 
+            <Link
+              className="nav-link text-white px-3 py-2 custom-hover"
               to={item.to}
               style={navLinkStyle}
             >
@@ -31,7 +34,10 @@ const Sidebar = () => {
       </ul>
 
       <div className="p-3 mt-auto border-top border-secondary">
-        <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center">
+        <button
+          className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center"
+          onClick={logout}
+        >
           <i className="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
         </button>
       </div>

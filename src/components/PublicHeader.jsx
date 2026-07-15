@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/images/logo.jpg';
+import { marcas } from '../data/vehiculos';
 
 export default function PublicHeader() {
   const location = useLocation();
@@ -59,23 +60,20 @@ export default function PublicHeader() {
                   data-bs-toggle="dropdown" 
                   aria-expanded="false"
                 >
-                  Categorías
+                  Marcas
                 </a>
-                {/* Adaptalo ahora pero para autos */}
                 <ul className="dropdown-menu dropdown-menu-dark bg-dark border-secondary shadow">
+                  {marcas.map((marca) => (
+                    <li key={marca.key}>
+                      <Link className="dropdown-item" to={`/marcas/${marca.key}`}>
+                        {marca.nombre}
+                      </Link>
+                    </li>
+                  ))}
+                  <li><hr className="dropdown-divider" /></li>
                   <li>
-                    <Link className="dropdown-item" to="/autos">
-                      Autos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/motos">
-                      Motos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/camionetas">
-                      Camionetas
+                    <Link className="dropdown-item fw-semibold" to="/marcas">
+                      Ver todas
                     </Link>
                   </li>
                 </ul>
@@ -114,7 +112,7 @@ export default function PublicHeader() {
               <li className="nav-item d-none d-lg-block border-end border-secondary mx-2" style={{ height: '24px' }}></li>
               
               <li className="nav-item">
-                <Link className="btn btn-primary btn-sm px-4" to="/admin">
+                <Link className="btn btn-primary btn-sm px-4" to="/login">
                   Iniciar sesión
                 </Link>
               </li>

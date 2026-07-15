@@ -1,0 +1,60 @@
+.register-container {
+  max-width: 360px;
+  margin: 80px auto;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: system-ui, sans-serif;
+}
+
+.register-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.register-input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.register-input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.register-button {
+  padding: 12px;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.register-button:hover {
+  background-color: #15803d;
+}
+
+.register-message {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.register-message.success {
+  color: #15803d;
+}
+
+.register-message.error {
+  color: #b91c1c;
+}

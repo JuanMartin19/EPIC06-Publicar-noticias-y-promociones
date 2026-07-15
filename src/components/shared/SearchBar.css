@@ -1,0 +1,36 @@
+.search-bar {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.search-input {
+  padding-left: 40px;
+  padding-right: 36px;
+  border-radius: 999px;
+  height: 46px;
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6c757d;
+  padding: 0;
+  line-height: 1;
+}
+
+.search-clear:hover {
+  color: #212529;
+}
