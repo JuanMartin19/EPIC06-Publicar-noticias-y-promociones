@@ -6,10 +6,14 @@ import './MarcaDetalle.css';
 
 export default function MarcaDetalle() {
   const { marcaKey } = useParams();
-  const { marca, busqueda, setBusqueda, vehiculosFiltrados } = useMarcaDetalle(marcaKey);
+  const { marca, busqueda, setBusqueda, vehiculosFiltrados, loading, notFound } = useMarcaDetalle(marcaKey);
 
-  if (!marca) {
+  if (notFound) {
     return <Navigate to="/marcas" replace />;
+  }
+
+  if (loading || !marca) {
+    return <p className="text-center py-5">Cargando marca...</p>;
   }
 
   return (

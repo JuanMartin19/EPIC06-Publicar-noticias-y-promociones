@@ -1,18 +1,24 @@
-import './VehicleCard.css';
+import { Link } from "react-router-dom";
+import "./VehicleCard.css";
 
 export default function VehicleCard({ vehiculo }) {
-  const { nombre, imagen, motor, transmision, rendimiento, precio } = vehiculo;
+  const { id, nombre, imagen, motor, transmision, rendimiento, precio } = vehiculo;
 
   return (
     <div className="card bg-black border-dark h-100 shadow-lg overflow-hidden rounded-3 vehicle-card">
-      <img
-        src={imagen}
-        className="card-img-top"
-        alt={nombre}
-        style={{ height: '200px', objectFit: 'cover', filter: 'brightness(85%)' }}
-      />
+      <Link to={`/vehiculos/${id}`}>
+        <img
+          src={imagen}
+          className="card-img-top"
+          alt={nombre}
+          style={{ height: "200px", objectFit: "cover", filter: "brightness(85%)" }}
+        />
+      </Link>
+
       <div className="card-body p-4 text-white">
-        <h4 className="card-title fw-bold mb-3">{nombre}</h4>
+        <Link to={`/vehiculos/${id}`} className="text-decoration-none text-white">
+          <h4 className="card-title fw-bold mb-3">{nombre}</h4>
+        </Link>
 
         <div className="spec-sheet mb-3">
           <div className="spec-row">
@@ -31,9 +37,18 @@ export default function VehicleCard({ vehiculo }) {
 
         <div className="d-flex justify-content-between align-items-center border-top border-secondary pt-3">
           <span className="fw-bold text-danger fs-5">{precio}</span>
-          <button className="btn btn-outline-light btn-sm fw-semibold">
-            Cotizar <i className="bi bi-chevron-right small ms-1"></i>
-          </button>
+
+          <div className="d-flex gap-2">
+            <button className="btn btn-outline-light btn-sm fw-semibold">
+              Cotizar
+            </button>
+            <Link
+              to={`/vehiculos/${id}`}
+              className="btn btn-outline-light btn-sm fw-semibold text-decoration-none"
+            >
+              Ver ficha <i className="bi bi-chevron-right small ms-1"></i>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -53,6 +53,8 @@ import Marcas from './pages/Marcas/Marcas';
 import MarcaDetalle from './pages/MarcaDetalle/MarcaDetalle';
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes/PreguntasFrecuentes';
 import Ayuda from './pages/Ayuda/Ayuda';
+import Vehiculos from './pages/dashboard/Vehiculos';
+import VehiculoDetalle from './pages/VehiculoDetalle/VehiculoDetalle';
 
 function App() {
 
@@ -71,12 +73,14 @@ function App() {
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
             <Route path="/ayuda" element={<Ayuda />} />
+            <Route path="/vehiculos/:id" element={<VehiculoDetalle />} />
           </Route>
 
           <Route element={<ProtectedRoute requireAdmin />}>
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
+              <Route path="vehiculos" element={<Vehiculos />} />
             </Route>
           </Route>
 
