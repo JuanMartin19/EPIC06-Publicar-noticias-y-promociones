@@ -17,7 +17,7 @@ const Sidebar = () => {
           { to: '/admin/home', icon: 'bi-house-door', label: 'Inicio' },
           { to: '/admin/dashboard', icon: 'bi-speedometer2', label: 'Dashboard' },
           { to: '/admin/vehiculos', icon: 'bi-car-front-fill', label: 'Gestión Vehículos' },
-          { to: '/admin/servicios', icon: 'bi-wrench-adjustable', label: 'Servicios' },
+          { to: '/admin/crud_servicios', icon: 'bi-wrench-adjustable', label: 'Servicios' },
           { to: '/admin/marketing', icon: 'bi-megaphone', label: 'Marketing' },
           { to: '/admin/cotizaciones', icon: 'bi-file-earmark-text', label: 'Cotizaciones' },
         ].map((item, index) => (

@@ -37,6 +37,7 @@ import Index from './pages/Index';
 import NotFound from './pages/error/Not_Found';
 // Rutas para Dashboard
 import Home from './pages/dashboard/Home';
+import Crud_Servicios from './pages/dashboard/Crud_Servicios';
 // Rutas para Auth
 import Login from './pages/auth/Login/Login';
 import Register from './pages/auth/Register/Register';
@@ -53,6 +54,7 @@ import Marcas from './pages/Marcas/Marcas';
 import MarcaDetalle from './pages/MarcaDetalle/MarcaDetalle';
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes/PreguntasFrecuentes';
 import Ayuda from './pages/Ayuda/Ayuda';
+import Servicios from './pages/Servicios/Servicios';
 
 function App() {
 
@@ -71,14 +73,20 @@ function App() {
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
             <Route path="/ayuda" element={<Ayuda />} />
+            <Route path="/servicios" element={<Servicios />} />
           </Route>
 
-          <Route element={<ProtectedRoute requireAdmin />}>
+          <Route path="/admin" element={<LayoutAdmin />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="crud_servicios" element={<Crud_Servicios />} />
+          </Route>
+          {/* <Route element={<ProtectedRoute requireAdmin />}>
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
             </Route>
-          </Route>
+          </Route> */}
 
           <Route path="*" element={<NotFound />} />
         </Routes>
