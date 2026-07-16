@@ -53,6 +53,7 @@ import Marcas from './pages/Marcas/Marcas';
 import MarcaDetalle from './pages/MarcaDetalle/MarcaDetalle';
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes/PreguntasFrecuentes';
 import Ayuda from './pages/Ayuda/Ayuda';
+import MarketingDashboard from './pages/dashboard/MarketingDashboard';
 
 function App() {
 
@@ -73,12 +74,18 @@ function App() {
             <Route path="/ayuda" element={<Ayuda />} />
           </Route>
 
-          <Route element={<ProtectedRoute requireAdmin />}>
+          <Route path="/admin" element={<LayoutAdmin />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="marketing" element={<MarketingDashboard />} />
+          </Route>
+          
+       {/*<Route element={<ProtectedRoute requireAdmin />}>
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
             </Route>
-          </Route>
+          </Route>*/}
 
           <Route path="*" element={<NotFound />} />
         </Routes>
