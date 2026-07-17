@@ -1,0 +1,13 @@
+.servicio-card {
+  transition: transform 0.2s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-4px);
+}
+
+.spec-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
