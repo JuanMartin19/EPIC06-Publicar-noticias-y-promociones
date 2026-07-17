@@ -54,6 +54,9 @@ import MarcaDetalle from './pages/MarcaDetalle/MarcaDetalle';
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes/PreguntasFrecuentes';
 import Ayuda from './pages/Ayuda/Ayuda';
 
+import RegistrarUsuario from './pages/dashboard/RegistrarUsuario/RegistrarUsuario';
+import Dashboard from './pages/dashboard/Dashboard';
+
 function App() {
 
   return (
@@ -77,6 +80,8 @@ function App() {
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
+              <Route path="registrar-usuario" element={<RegistrarUsuario />} />
+              <Route path="dashboard" element={<Dashboard />} />
             </Route>
           </Route>
 

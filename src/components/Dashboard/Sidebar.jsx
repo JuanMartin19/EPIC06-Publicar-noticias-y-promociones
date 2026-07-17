@@ -20,6 +20,7 @@ const Sidebar = () => {
           { to: '/admin/servicios', icon: 'bi-wrench-adjustable', label: 'Servicios' },
           { to: '/admin/marketing', icon: 'bi-megaphone', label: 'Marketing' },
           { to: '/admin/cotizaciones', icon: 'bi-file-earmark-text', label: 'Cotizaciones' },
+          { to: '/admin/registrar-usuario', icon: 'bi-person-plus-fill', label: 'Nuevo Usuario' },
         ].map((item, index) => (
           <li className="nav-item mb-1" key={index}>
             <Link

@@ -1,0 +1,165 @@
+.home-container{
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:30px 15px;
+
+}
+
+/* Encabezado */
+
+.home-header{
+
+    margin-bottom:35px;
+
+}
+
+.home-header h2{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#212529;
+
+    margin-bottom:8px;
+
+}
+
+.home-header p{
+
+    color:#6c757d;
+
+    margin:0;
+
+    font-size:1rem;
+
+}
+
+/* Tarjetas */
+
+.home-card{
+
+    border:none;
+
+    border-radius:16px;
+
+    box-shadow:0 .35rem .9rem rgba(0,0,0,.08);
+
+    transition:.25s;
+
+    min-height:210px;
+
+    max-width:310px;
+
+    margin:auto;
+
+}
+
+.home-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 .8rem 1.6rem rgba(0,0,0,.14);
+
+}
+
+.home-card .card-body{
+
+    padding:1.5rem;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* Icono */
+
+.home-icon{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:20px;
+
+}
+
+.home-icon i{
+
+    color:#fff;
+
+    font-size:1.4rem;
+
+}
+
+/* Texto */
+
+.home-card h5{
+
+    color:#212529;
+
+    font-size:1.25rem;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.home-card p{
+
+    color:#6c757d;
+
+    font-size:.9rem;
+
+    flex-grow:1;
+
+}
+
+.home-link{
+
+    color:#dc3545;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.home-card:hover .home-link{
+
+    letter-spacing:.4px;
+
+}
+
+/* Responsive */
+
+@media (max-width:992px){
+
+    .home-container{
+
+        max-width:100%;
+
+        padding:20px;
+
+    }
+
+    .home-card{
+
+        max-width:100%;
+
+    }
+
+}

@@ -1,48 +1,280 @@
-.login-container {
-  max-width: 360px;
-  margin: 80px auto;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-family: system-ui, sans-serif;
+.login-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background:#f8f9fa;
+    overflow:hidden;
+    position:relative;
 }
 
-.login-title {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
+/* ---------- Fondo ---------- */
+
+.login-bg-circle{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    z-index:0;
 }
 
-.login-subtitle {
-  color: #666;
-  margin-bottom: 24px;
+.circle-1{
+    width:320px;
+    height:320px;
+    background:#dc354550;
+    top:-120px;
+    left:-120px;
 }
 
-.login-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
+.circle-2{
+    width:280px;
+    height:280px;
+    background:#00000020;
+    bottom:-100px;
+    right:-100px;
 }
 
-.login-button:hover {
-  background-color: #1d4ed8;
-}
-.login-page {
-  min-height: calc(100vh - 80px); /* ajusta 80px según la altura de tu navbar */
-  display: flex;
-  align-items: center;
+/* ---------- Card ---------- */
+
+.login-card{
+
+    background:#111;
+
+    border:none;
+
+    border-radius:24px;
+
+    padding:50px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.18);
+
+    backdrop-filter:blur(20px);
+
+    position:relative;
+
+    overflow:hidden;
+
 }
 
-.login-page .card {
-  transition: transform 0.2s ease;
+.login-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:#dc3545;
+
 }
 
-.login-page .btn-danger:hover {
-  filter: brightness(0.92);
+/* ---------- Icono ---------- */
+
+.login-icon{
+
+    width:75px;
+
+    height:75px;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#dc354515;
+
+    color:#dc3545;
+
+    font-size:2rem;
+
+}
+
+/* ---------- Textos ---------- */
+
+.login-title{
+
+    color:white;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+}
+
+.login-subtitle{
+
+    color:#b8b8b8;
+
+    line-height:1.7;
+
+    margin-bottom:0;
+
+}
+
+/* ---------- Botón ---------- */
+
+/* ---------- Botón ---------- */
+
+.login-btn{
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    font-size:1rem;
+    font-weight:600;
+    letter-spacing:.3px;
+
+    border-radius:14px;
+
+    transition:all .3s ease;
+
+    box-shadow:0 8px 20px rgba(220,53,69,.25);
+}
+
+.login-btn i{
+    font-size:1.1rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.login-btn span{
+    display:flex;
+    align-items:center;
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 28px rgba(220,53,69,.35);
+}
+
+.login-btn:active{
+    transform:translateY(0);
+}
+
+.login-btn:focus{
+    box-shadow:
+        0 0 0 .2rem rgba(220,53,69,.25),
+        0 8px 20px rgba(220,53,69,.25);
+}
+
+/* ---------- Divider ---------- */
+
+.login-divider{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin:28px 0;
+
+}
+
+.login-divider span{
+
+    font-size:.85rem;
+
+    color:#8f8f8f;
+
+}
+
+/* ---------- Imagen ---------- */
+
+.login-image{
+
+    position:relative;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.2);
+
+}
+
+.login-image img{
+
+    width:100%;
+
+    height:500px;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.login-image:hover img{
+
+    transform:scale(1.05);
+
+}
+
+.login-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.85),
+        rgba(0,0,0,.15)
+    );
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-end;
+
+    padding:40px;
+
+}
+
+.login-overlay h2{
+
+    color:white;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+.login-overlay p{
+
+    color:#e8e8e8;
+
+    margin:0;
+
+}
+
+/* ---------- Responsive ---------- */
+
+@media(max-width:992px){
+
+    .login-card{
+
+        padding:35px;
+
+    }
+
 }
