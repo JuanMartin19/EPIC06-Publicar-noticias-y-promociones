@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./VehicleCard.css";
 
 export default function VehicleCard({ vehiculo }) {
   const { id, nombre, imagen, motor, transmision, rendimiento, precio } = vehiculo;
+  const navigate = useNavigate();
+
+  const handleCotizar = () => {
+    navigate("/catalogo/cotizar", { state: { vehiculoId: id } });
+  };
 
   return (
     <div className="card bg-black border-dark h-100 shadow-lg overflow-hidden rounded-3 vehicle-card">
@@ -39,7 +44,7 @@ export default function VehicleCard({ vehiculo }) {
           <span className="fw-bold text-danger fs-5">{precio}</span>
 
           <div className="d-flex gap-2">
-            <button className="btn btn-outline-light btn-sm fw-semibold">
+            <button className="btn btn-outline-light btn-sm fw-semibold" onClick={handleCotizar}>
               Cotizar
             </button>
             <Link

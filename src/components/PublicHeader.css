@@ -1,0 +1,96 @@
+/* ===========================
+   Dropdown
+=========================== */
+
+@media (min-width: 992px) {
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+/* ===========================
+   Login Button
+=========================== */
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  padding: 0.5rem 1.15rem;   /* Más pequeño */
+
+  text-decoration: none;
+  color: #fff;
+
+  background: linear-gradient(135deg, #dc3545, #b71c2d);
+
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50px;
+
+  font-size: .88rem;          /* Antes .95rem */
+  font-weight: 600;
+
+  transition: all .3s ease;
+
+  box-shadow: 0 8px 20px rgba(220,53,69,.25);
+}
+
+.login-btn i {
+  width: 28px;                /* Antes 34px */
+  height: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+
+  font-size: .85rem;          /* Ícono más pequeño */
+
+  transition: .3s;
+}
+
+.login-btn:hover {
+  color: #fff;
+
+  background: linear-gradient(135deg, #e83d4e, #c82333);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgba(220,53,69,.35);
+}
+
+.login-btn:hover i {
+  transform: translateX(3px);
+  background: rgba(255,255,255,.28);
+}
+
+.login-btn:active {
+  transform: scale(.98);
+}
+
+@media (max-width: 991px) {
+  .login-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 991px) {
+
+  .login-btn {
+
+    width: 100%;
+
+    justify-content: center;
+
+    margin-top: 1rem;
+
+  }
+
+}

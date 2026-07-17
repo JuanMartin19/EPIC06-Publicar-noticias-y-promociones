@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/images/logo.jpg';
 import { getMarcas } from '../api/vehiculosApi';
+import './PublicHeader.css';
 
 export default function PublicHeader() {
   const location = useLocation();
@@ -75,6 +76,12 @@ export default function PublicHeader() {
                 </Link>
               </li>
 
+              <li className="nav-item">
+                <Link className={`nav-link ${isActive('/servicios')}`} to="/servicios">
+                  Servicios
+                </Link>
+              </li>
+
               <li className="nav-item dropdown">
                 <a 
                   className="nav-link dropdown-toggle" 
@@ -102,10 +109,29 @@ export default function PublicHeader() {
                 </ul>
               </li>
 
-              <li className="nav-item">
-                <Link className={`nav-link ${isActive('/contacto')}`} to="/contacto">
-                  Contacto
-                </Link>
+{/* Dentro de contacto quiero que se pueda agendar el servicio quiero el menu desplegable */}
+              <li className="nav-item dropdown">
+                <a 
+                  className="nav-link dropdown-toggle" 
+                  href="#" 
+                  role="button" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false"
+                >
+                  Contactanos
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark bg-dark border-secondary shadow">
+                  <li>
+                    <Link className="dropdown-item" to="/servicios-contacto">
+                      Agendar Servicio
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/contacto">
+                      Contacto General
+                    </Link>
+                  </li>
+                </ul>
               </li>
 
               <li className="nav-item dropdown">
@@ -134,9 +160,10 @@ export default function PublicHeader() {
               
               <li className="nav-item d-none d-lg-block border-end border-secondary mx-2" style={{ height: '24px' }}></li>
               
-              <li className="nav-item">
-                <Link className="btn btn-primary btn-sm px-4" to="/login">
-                  Iniciar sesión
+              <li className="nav-item ms-lg-2">
+                <Link className="login-btn" to="/login">
+                  <i className="bi bi-box-arrow-in-right"></i>
+                  <span>Iniciar sesión</span>
                 </Link>
               </li>
             </ul>
