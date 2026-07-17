@@ -74,18 +74,19 @@ function App() {
             <Route path="/ayuda" element={<Ayuda />} />
           </Route>
 
-          <Route path="/admin" element={<LayoutAdmin />}>
+          {/*<Route path="/admin" element={<LayoutAdmin />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="marketing" element={<MarketingDashboard />} />
-          </Route>
+          </Route>*/}
           
-       {/*<Route element={<ProtectedRoute requireAdmin />}>
+          <Route element={<ProtectedRoute requireAdmin />}>
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
+              <Route path="marketing" element={<MarketingDashboard />} />
             </Route>
-          </Route>*/}
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>

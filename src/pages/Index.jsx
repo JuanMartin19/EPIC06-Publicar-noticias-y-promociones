@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { marketingService } from '../services/marketingService';
+import { marketingService } from '../api/marketingService';
 
 export default function Index() {
   const [noticias, setNoticias] = useState([]);

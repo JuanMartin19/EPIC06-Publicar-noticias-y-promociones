@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { marketingService } from '../../services/marketingService';
+import { marketingService } from '../../api/marketingService';
+import Swal from 'sweetalert2';
+
+// Configuración para notificaciones pequeñas (tipo Toast) para los switches
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+});
 
 const MarketingDashboard = () => {
     const [noticias, setNoticias] = useState([]);
@@ -38,6 +48,7 @@ const MarketingDashboard = () => {
             setListaVehiculos(dataVehiculos);
         } catch (error) {
             console.error("Error cargando datos:", error);
+            Swal.fire('Error', 'Hubo un problema al cargar la información del servidor.', 'error');
         }
     };
 
@@ -76,8 +87,16 @@ const MarketingDashboard = () => {
             setArchivoNoticia(null);
             setUrlNoticia('');
             cargarDatos();
+            
+            Swal.fire({
+                title: '¡Éxito!',
+                text: 'El banner se ha subido correctamente.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
         } catch (error) {
-            alert('Error al subir el banner');
+            Swal.fire('Error', 'Hubo un problema al subir el banner.', 'error');
         } finally {
             setLoading(false);
         }
@@ -85,7 +104,11 @@ const MarketingDashboard = () => {
 
     const handleGuardarPromocion = async (e) => {
         e.preventDefault();
-        if (!vehiculoId) { alert("Debes seleccionar un vehículo de la lista."); return; }
+        if (!vehiculoId) { 
+            Swal.fire('Atención', 'Debes seleccionar un vehículo de la lista.', 'warning'); 
+            return; 
+        }
+        
         setLoading(true);
         try {
             const formData = new FormData();
@@ -103,8 +126,16 @@ const MarketingDashboard = () => {
             
             cancelarEdicion(); 
             cargarDatos();
+
+            Swal.fire({
+                title: '¡Listo!',
+                text: modoEdicion ? 'La promoción ha sido actualizada.' : 'La promoción ha sido creada con éxito.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
         } catch (error) {
-            alert(modoEdicion ? 'Error al actualizar la promoción' : 'Error al crear la promoción');
+            Swal.fire('Error', modoEdicion ? 'Hubo un problema al actualizar la promoción' : 'Hubo un problema al crear la promoción', 'error');
         } finally {
             setLoading(false);
         }
@@ -126,26 +157,68 @@ const MarketingDashboard = () => {
     };
 
     const handleToggleNoticia = async (id) => {
-        await marketingService.toggleActivoNoticia(id);
-        cargarDatos();
+        try {
+            await marketingService.toggleActivoNoticia(id);
+            cargarDatos();
+            Toast.fire({ icon: 'success', title: 'Estado del banner actualizado' });
+        } catch (error) {
+            Swal.fire('Error', 'No se pudo actualizar el estado del banner.', 'error');
+        }
     };
 
     const handleTogglePromocion = async (id) => {
-        await marketingService.toggleActivoPromocion(id);
-        cargarDatos();
+        try {
+            await marketingService.toggleActivoPromocion(id);
+            cargarDatos();
+            Toast.fire({ icon: 'success', title: 'Estado de la promoción actualizado' });
+        } catch (error) {
+            Swal.fire('Error', 'No se pudo actualizar el estado de la promoción.', 'error');
+        }
     };
 
     const handleEliminarNoticia = async (id) => {
-        if (window.confirm('¿ELIMINAR por completo del servidor y BD? Esta acción no se puede deshacer.')) {
-            await marketingService.eliminarNoticia(id);
-            cargarDatos();
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará el banner del servidor y de la base de datos. ¡Esta acción no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await marketingService.eliminarNoticia(id);
+                cargarDatos();
+                Swal.fire('¡Eliminado!', 'El banner ha sido borrado.', 'success');
+            } catch (error) {
+                Swal.fire('Error', 'No se pudo eliminar el banner.', 'error');
+            }
         }
     };
 
     const handleEliminarPromocion = async (id) => {
-        if (window.confirm('¿ELIMINAR por completo del servidor y BD? Esta acción no se puede deshacer.')) {
-            await marketingService.eliminarPromocion(id);
-            cargarDatos();
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará la promoción por completo. ¡Esta acción no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await marketingService.eliminarPromocion(id);
+                cargarDatos();
+                Swal.fire('¡Eliminada!', 'La promoción ha sido borrada.', 'success');
+            } catch (error) {
+                Swal.fire('Error', 'No se pudo eliminar la promoción.', 'error');
+            }
         }
     };
 
