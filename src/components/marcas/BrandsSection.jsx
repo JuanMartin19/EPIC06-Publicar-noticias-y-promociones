@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import comercialApi from "../../api/Comercialapi";
+import { getMarcas } from "../../api/vehiculosApi";
 import BrandGrid from "./BrandGrid";
 
 export default function BrandsSection() {
@@ -10,21 +10,20 @@ export default function BrandsSection() {
   useEffect(() => {
     let activo = true;
 
-    comercialApi
-      .get("/api/vehiculos/marcas")
-      .then((res) => {
+    getMarcas()
+      .then((data) => {
         if (!activo) return;
 
         // Mapeamos el DTO del backend (id, nombre, logo, descripcion)
         // a lo que espera BrandCard (key, nombre, logo, descripcion)
-        const data = res.data.map((m) => ({
+        const marcasFormateadas = data.map((m) => ({
           key: m.id,
           nombre: m.nombre,
           logo: m.logo,
           descripcion: m.descripcion,
         }));
 
-        setMarcas(data);
+        setMarcas(marcasFormateadas);
       })
       .catch((err) => {
         if (activo) setError(err);

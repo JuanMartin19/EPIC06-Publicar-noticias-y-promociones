@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import comercialApi from "../api/Comercialapi";
+import { getMarcas, getVehiculosPorMarca } from "../api/vehiculosApi";
 
 export function useMarcaDetalle(marcaKey) {
   const [busqueda, setBusqueda] = useState("");
@@ -13,13 +13,12 @@ export function useMarcaDetalle(marcaKey) {
     setLoading(true);
     setNotFound(false);
 
-    comercialApi
-      .get("/api/vehiculos/marcas")
-      .then((res) => {
+    getMarcas()
+      .then((marcas) => {
         if (!activo) return null;
 
         // marcaKey viene de la URL como string, el id del backend es numérico
-        const encontrada = res.data.find((m) => String(m.id) === String(marcaKey));
+        const encontrada = marcas.find((m) => String(m.id) === String(marcaKey));
 
         if (!encontrada) {
           setNotFound(true);
@@ -29,14 +28,12 @@ export function useMarcaDetalle(marcaKey) {
 
         setMarca(encontrada);
 
-        return comercialApi.get("/api/vehiculos/filtrar/marca", {
-          params: { nombre: encontrada.nombre },
-        });
+        return getVehiculosPorMarca(encontrada.nombre);
       })
-      .then((res) => {
-        if (!activo || !res) return;
+      .then((data) => {
+        if (!activo || !data) return;
 
-        const data = res.data.map((v) => ({
+        const vehiculosFormateados = data.map((v) => ({
           id: v.id,
           nombre: v.modelo,
           imagen: v.imagenes && v.imagenes[0],
@@ -46,7 +43,7 @@ export function useMarcaDetalle(marcaKey) {
           precio: `$${Number(v.precio).toLocaleString()}`,
         }));
 
-        setVehiculos(data);
+        setVehiculos(vehiculosFormateados);
       })
       .catch((err) => {
         console.error("No se pudo cargar la marca:", err);

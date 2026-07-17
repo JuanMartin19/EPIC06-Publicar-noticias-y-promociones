@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import comercialApi from "../../api/Comercialapi";
+import { getCategorias, getVehiculosPorCategoria } from "../../api/vehiculosApi";
 import CategoryTabs from "../../components/catalogo/CategoryTabs";
 import VehicleGrid from "../../components/catalogo/VehicleGrid";
 
@@ -13,12 +13,11 @@ export default function Catalogo() {
 
   // Cargar categorías una sola vez
   useEffect(() => {
-    comercialApi
-      .get("/api/vehiculos/categorias")
-      .then((res) => {
-        setCategorias(res.data);
-        if (res.data.length > 0) {
-          setCategoriaActiva(res.data[0].id);
+    getCategorias()
+      .then((data) => {
+        setCategorias(data);
+        if (data.length > 0) {
+          setCategoriaActiva(data[0].id);
         } else {
           setLoading(false);
         }
@@ -39,11 +38,10 @@ export default function Catalogo() {
     let activo = true;
     setLoading(true);
 
-    comercialApi
-      .get("/api/vehiculos/filtrar/categoria", { params: { nombre: categoria.nombre } })
-      .then((res) => {
+    getVehiculosPorCategoria(categoria.nombre)
+      .then((data) => {
         if (!activo) return;
-        setVehiculosCategoria(res.data);
+        setVehiculosCategoria(data);
         setAnioActivo("todos"); // al cambiar de categoría, reinicia el filtro de año
       })
       .catch((err) => {

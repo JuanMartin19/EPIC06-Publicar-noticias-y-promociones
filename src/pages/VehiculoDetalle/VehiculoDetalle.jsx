@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import comercialApi from "../../api/Comercialapi";
+import { getVehiculoPorId } from "../../api/vehiculosApi";
 
 export default function VehiculoDetalle() {
   const { id } = useParams();
@@ -16,11 +16,10 @@ export default function VehiculoDetalle() {
     let activo = true;
     setLoading(true);
 
-    comercialApi
-      .get(`/api/vehiculos/${id}`)
-      .then((res) => {
+    getVehiculoPorId(id)
+      .then((data) => {
         if (!activo) return;
-        setVehiculo(res.data);
+        setVehiculo(data);
         setImagenActiva(0);
       })
       .catch((err) => {

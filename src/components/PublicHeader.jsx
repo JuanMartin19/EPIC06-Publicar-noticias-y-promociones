@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/images/logo.jpg';
-import comercialApi from '../api/Comercialapi';
+import { getMarcas } from '../api/vehiculosApi';
 
 export default function PublicHeader() {
   const location = useLocation();
@@ -12,15 +12,14 @@ export default function PublicHeader() {
   useEffect(() => {
     let activo = true;
 
-    comercialApi
-      .get('/api/vehiculos/marcas')
-      .then((res) => {
+    getMarcas()
+      .then((data) => {
         if (!activo) return;
-        const data = res.data.map((m) => ({
+        const marcasFormateadas = data.map((m) => ({
           key: m.id,
           nombre: m.nombre,
         }));
-        setMarcas(data);
+        setMarcas(marcasFormateadas);
       })
       .catch((err) => {
         console.error('No se pudieron cargar las marcas del menú:', err);
