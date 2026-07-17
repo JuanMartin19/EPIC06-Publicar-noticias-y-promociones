@@ -1,0 +1,45 @@
+.crud-servicios-container {
+  background-color: #ffffff;
+  min-height: 90vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* El contenedor del formulario pasa a ser un gris muy claro */
+.bg-light-card {
+  background-color: #f8f9fa !important;
+}
+
+/* Conservamos la tabla con su fondo oscuro de la captura original */
+.bg-dark-card {
+  background-color: #1a1a1e !important;
+}
+
+/* Inputs claros para la sección del formulario */
+.admin-input-light {
+  background-color: #ffffff !important;
+  border: 1px solid #ced4da !important;
+  color: #212529 !important;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.admin-input-light:focus {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Mantener el diseño de la tabla oscura */
+.table-dark {
+  --bs-table-bg: #1a1a1e !important;
+  --bs-table-hover-bg: #24242a !important;
+}
+
+th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fw-extrabold {
+  font-weight: 800;
+}

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { contactoService } from '../services/contactoService'; // Agregar este import
+import { contactoService } from '../services/contactoService';
 
 const INITIAL_CONTACT = {
-  telefono: '4421234567', // Solo los 10 dígitos sin +52
+  telefono: '4421234567',
   email: 'contacto@royalautocenter.com',
   direccion: 'Querétaro, Qro., México',
   bloquesHorario: [
@@ -17,6 +17,42 @@ export function useContactAdmin() {
   const [errores, setErrores] = useState({});
   const [cargando, setCargando] = useState(true);
 
+  // =============================================
+  // 1. PRIMERO: FUNCIÓN PARA CARGAR DATOS
+  // =============================================
+  const cargarContacto = async () => {
+    try {
+      setCargando(true);
+      console.log('Cargando datos de contacto...');
+      const data = await contactoService.getContacto();
+      console.log('Datos recibidos:', data);
+      if (data) {
+        setContactData(data);
+      } else {
+        console.warn('No se recibieron datos, usando iniciales');
+        setContactData(INITIAL_CONTACT);
+      }
+    } catch (error) {
+      console.error('Error al cargar contacto:', error);
+      setMensaje('Error al cargar los datos: ' + error.message);
+      setTimeout(() => setMensaje(''), 3000);
+      // En caso de error, mantener datos iniciales
+      setContactData(INITIAL_CONTACT);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  // =============================================
+  // 2. SEGUNDO: useEffect PARA CARGAR AL INICIAR
+  // =============================================
+  useEffect(() => {
+    cargarContacto();
+  }, []);
+
+  // =============================================
+  // 3. RESTO DE FUNCIONES
+  // =============================================
   const handleEdit = () => {
     setEditando(true);
     setMensaje('');
@@ -25,10 +61,10 @@ export function useContactAdmin() {
 
   const handleCancel = () => {
     setEditando(false);
-    cargarContacto(); // Esta línea cambia
+    cargarContacto();
     setMensaje('');
     setErrores({});
-    };
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,25 +113,6 @@ export function useContactAdmin() {
     }
   };
 
-  const cargarContacto = async () => {
-    try {
-        setCargando(true);
-        const data = await contactoService.getContacto();
-        if (data) {
-        setContactData(data);
-        }
-    } catch (error) {
-        setMensaje('Error al cargar los datos');
-        setTimeout(() => setMensaje(''), 3000);
-    } finally {
-        setCargando(false);
-    }
-    };
-
-    useEffect(() => {
-    cargarContacto();
-    }, []);
-
   const validarEmail = (email) => {
     const emailLimpio = email.trim();
     if (!emailLimpio) return 'El email es requerido';
@@ -125,45 +142,44 @@ export function useContactAdmin() {
     return Object.keys(nuevosErrores).length === 0;
   };
 
-  const handleSave = async (e) => { // Agregar async
+  const handleSave = async (e) => {
     e.preventDefault();
     
     const emailLimpio = contactData.email.trim();
     if (emailLimpio !== contactData.email) {
-        setContactData(prev => ({ ...prev, email: emailLimpio }));
+      setContactData(prev => ({ ...prev, email: emailLimpio }));
     }
     
     if (!validarCampos()) {
-        return;
+      return;
     }
     
     try {
-        const dataToSend = {
+      const dataToSend = {
         telefono: contactData.telefono,
         email: contactData.email.trim(),
         direccion: contactData.direccion,
         bloquesHorario: contactData.bloquesHorario.map(bloque => ({
-            diaInicio: bloque.diaInicio,
-            diaFin: bloque.diaFin,
-            horaInicio: bloque.horaInicio,
-            horaFin: bloque.horaFin
+          diaInicio: bloque.diaInicio,
+          diaFin: bloque.diaFin,
+          horaInicio: bloque.horaInicio,
+          horaFin: bloque.horaFin
         }))
-        };
+      };
 
-        await contactoService.updateContacto(dataToSend);
-        
-        setEditando(false);
-        setMensaje('Datos de contacto actualizados correctamente');
-        await cargarContacto();
-        
-        setTimeout(() => setMensaje(''), 3000);
+      await contactoService.updateContacto(dataToSend);
+      
+      setEditando(false);
+      setMensaje('Datos de contacto actualizados correctamente');
+      await cargarContacto();
+      
+      setTimeout(() => setMensaje(''), 3000);
     } catch (error) {
-        setMensaje('Error al guardar los datos');
-        setTimeout(() => setMensaje(''), 3000);
+      setMensaje('Error al guardar los datos: ' + error.message);
+      setTimeout(() => setMensaje(''), 3000);
     }
-    };
+  };
 
-  // Formatear teléfono para mostrar
   const formatearTelefono = (telefono) => {
     const numeros = telefono.replace(/\D/g, '');
     if (numeros.length === 10) {

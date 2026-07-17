@@ -37,7 +37,13 @@ import Index from './pages/Index';
 import NotFound from './pages/error/Not_Found';
 // Rutas para Dashboard
 import Home from './pages/dashboard/Home';
+<<<<<<< HEAD
 import Contacto_Dash from './pages/dashboard/Contacto-Dash';
+=======
+import Crud_Servicios from './pages/dashboard/Crud_Servicios';
+import ServiciosContacto from './pages/Contacto/ServiciosContacto';
+import Citas_Servicios from './pages/dashboard/Citas_Servicios';
+>>>>>>> 8aae6438e5eba29ddc18761f49bd3c643caa8052
 // Rutas para Auth
 import Login from './pages/auth/Login/Login';
 import Register from './pages/auth/Register/Register';
@@ -54,6 +60,8 @@ import Marcas from './pages/Marcas/Marcas';
 import MarcaDetalle from './pages/MarcaDetalle/MarcaDetalle';
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes/PreguntasFrecuentes';
 import Ayuda from './pages/Ayuda/Ayuda';
+import Servicios from './pages/Servicios/Servicios';
+import MarketingDashboard from './pages/dashboard/MarketingDashboard';
 
 function App() {
 
@@ -72,17 +80,32 @@ function App() {
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
             <Route path="/ayuda" element={<Ayuda />} />
+            <Route path="/servicios" element={<Servicios />} />
+            <Route path="/servicios-contacto" element={<ServiciosContacto />} />
           </Route>
 
+<<<<<<< HEAD
           <Route path="/admin" element={<LayoutAdmin />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="contacto" element={<Contacto_Dash />} />
           </Route>
           {/* <Route element={<ProtectedRoute requireAdmin />}>
+=======
+          {/*<Route path="/admin" element={<LayoutAdmin />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="marketing" element={<MarketingDashboard />} />
+          </Route>*/}
+          
+          <Route element={<ProtectedRoute requireAdmin />}>
+>>>>>>> 8aae6438e5eba29ddc18761f49bd3c643caa8052
             <Route path="/admin" element={<LayoutAdmin />}>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
+              <Route path="marketing" element={<MarketingDashboard />} />
+                <Route path="crud-servicios" element={<Crud_Servicios />} />
+                <Route path="citas-servicios" element={<Citas_Servicios />} />
             </Route>
           </Route> */}
 
