@@ -2,7 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import "./VehicleCard.css";
 
 export default function VehicleCard({ vehiculo }) {
-  const { id, nombre, imagen, motor, transmision, rendimiento, precio } = vehiculo;
+  const {
+    id,
+    nombre,
+    imagen,
+    motor,
+    transmision,
+    rendimiento,
+    precio,
+    enPromocion,
+    precioPromocion,
+  } = vehiculo;
+
   const navigate = useNavigate();
 
   const handleCotizar = () => {
@@ -10,7 +21,16 @@ export default function VehicleCard({ vehiculo }) {
   };
 
   return (
-    <div className="card bg-black border-dark h-100 shadow-lg overflow-hidden rounded-3 vehicle-card">
+    <div className="card bg-black border-dark h-100 shadow-lg overflow-hidden rounded-3 vehicle-card position-relative">
+      {enPromocion && (
+        <span
+          className="badge bg-danger position-absolute"
+          style={{ top: 12, left: 12, zIndex: 2 }}
+        >
+          <i className="bi bi-tag-fill me-1"></i>Promoción
+        </span>
+      )}
+
       <Link to={`/vehiculos/${id}`}>
         <img
           src={imagen}
@@ -41,7 +61,16 @@ export default function VehicleCard({ vehiculo }) {
         </div>
 
         <div className="d-flex justify-content-between align-items-center border-top border-secondary pt-3">
-          <span className="fw-bold text-danger fs-5">{precio}</span>
+          <div>
+            {enPromocion ? (
+              <>
+                <div className="text-white-50 small text-decoration-line-through">{precio}</div>
+                <span className="fw-bold text-danger fs-5">{precioPromocion}</span>
+              </>
+            ) : (
+              <span className="fw-bold text-danger fs-5">{precio}</span>
+            )}
+          </div>
 
           <div className="d-flex gap-2">
             <button className="btn btn-outline-light btn-sm fw-semibold" onClick={handleCotizar}>

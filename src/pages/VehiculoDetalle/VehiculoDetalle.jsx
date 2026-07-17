@@ -119,9 +119,24 @@ export default function VehiculoDetalle() {
         <div className="col-12 col-lg-6">
           <p className="text-uppercase text-secondary small mb-1">{vehiculo.marcaNombre}</p>
           <h1 className="fw-bold mb-2">{vehiculo.modelo} <span className="text-secondary fs-4">{vehiculo.anio}</span></h1>
-          <p className="fs-3 fw-bold text-danger mb-3">
-            ${Number(vehiculo.precio).toLocaleString()}
-          </p>
+
+          {vehiculo.promocionId ? (
+            <div className="mb-3">
+              <span className="badge bg-danger mb-2">
+                <i className="bi bi-tag-fill me-1"></i>Promoción
+              </span>
+              <div className="text-secondary text-decoration-line-through">
+                ${Number(vehiculo.precio).toLocaleString()}
+              </div>
+              <p className="fs-3 fw-bold text-danger mb-0">
+                ${Number(vehiculo.precioFinal).toLocaleString()}
+              </p>
+            </div>
+          ) : (
+            <p className="fs-3 fw-bold text-danger mb-3">
+              ${Number(vehiculo.precio).toLocaleString()}
+            </p>
+          )}
 
           <span className={`badge ${vehiculo.disponible ? "bg-success" : "bg-secondary"} mb-3`}>
             {vehiculo.disponible ? "Disponible" : "No disponible"}

@@ -77,6 +77,10 @@ export default function Catalogo() {
       transmision: v.transmision,
       rendimiento: v.rendimiento,
       precio: `$${Number(v.precio).toLocaleString()}`,
+      enPromocion: Boolean(v.promocionId),
+      precioPromocion: v.precioFinal
+        ? `$${Number(v.precioFinal).toLocaleString()}`
+        : null,
     }));
   }, [vehiculosCategoria, anioActivo]);
 
