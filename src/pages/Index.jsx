@@ -12,8 +12,13 @@ export default function Index() {
       try {
         const dataNoticias = await marketingService.getNoticias();
         const dataPromociones = await marketingService.getPromociones();
-        setNoticias(dataNoticias);
-        setPromociones(dataPromociones);
+
+        // Log temporal para verificar el nombre real de las propiedades
+        // que trae tu API (puedes borrar esto cuando confirmes que todo jala bien)
+        console.log('Noticias recibidas del backend:', dataNoticias);
+
+        setNoticias(Array.isArray(dataNoticias) ? dataNoticias : []);
+        setPromociones(Array.isArray(dataPromociones) ? dataPromociones : []);
       } catch (error) {
         console.error("Error al cargar banners y promociones:", error);
       }
@@ -21,28 +26,62 @@ export default function Index() {
     fetchPublicData();
   }, []);
 
+  // Normaliza el campo de imagen sin importar si el backend
+  // manda "imagenUrl" (camelCase) o "imagen_url" (snake_case, como en tu tabla MySQL)
+  const bannersActivos = noticias
+    .filter((n) => n.activo === 1 || n.activo === true || n.activo === undefined)
+    .map((n) => ({
+      ...n,
+      _imagen: n.imagenUrl || n.imagen_url || null,
+    }))
+    .filter((n) => !!n._imagen); // descarta noticias sin imagen para no dejar huecos vacíos
+
   return (
     <div className="bg-white text-dark text-start">
 
       {/* =========================================
           1. RULETA DE IMÁGENES (BANNERS PRINCIPALES)
       ========================================= */}
-      {noticias.length > 0 && (
-        <div id="heroCarousel" className="carousel slide" data-bs-ride="carousel">
+      {bannersActivos.length > 0 && (
+        <div id="heroCarousel" className="carousel slide carousel-fade" data-bs-ride="carousel">
+
+          {/* Indicadores (puntitos) para que se note que es un carrusel navegable */}
+          {bannersActivos.length > 1 && (
+            <div className="carousel-indicators">
+              {bannersActivos.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to={index}
+                  className={index === 0 ? 'active' : ''}
+                  aria-current={index === 0 ? 'true' : undefined}
+                  aria-label={`Banner ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+
           <div className="carousel-inner">
-            {noticias.map((noticia, index) => (
+            {bannersActivos.map((noticia, index) => (
               <div key={noticia.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                 <img
-                  src={noticia.imagenUrl}
+                  src={noticia._imagen}
                   className="d-block w-100"
                   alt="Banner Promocional"
                   style={{ height: '450px', objectFit: 'cover' }}
+                  onError={(e) => {
+                    // Evita el hueco en blanco si la URL viene rota o el archivo no existe
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/1200x450?text=Royal+Auto+Center';
+                  }}
                 />
               </div>
             ))}
           </div>
+
           {/* Controles del carrusel solo si hay más de 1 imagen */}
-          {noticias.length > 1 && (
+          {bannersActivos.length > 1 && (
             <>
               <button className="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -58,7 +97,7 @@ export default function Index() {
       )}
 
       {/* =========================================
-          2. SECCIÓN HERO (La que ya tenías)
+          2. SECCIÓN HERO
       ========================================= */}
       <section className="py-5 bg-white border-bottom border-light position-relative overflow-hidden">
         <div className="container position-relative py-5" style={{ zIndex: 1 }}>
@@ -105,63 +144,72 @@ export default function Index() {
             </div>
 
             <div className="row g-4 justify-content-center">
-              {promociones.map((promo) => (
-                <div key={promo.id} className="col-12 col-md-6 col-lg-4">
-                  <div className="card h-100 bg-black border-secondary shadow-lg rounded-3 overflow-hidden position-relative">
+              {promociones.map((promo) => {
+                const imagenPromo = promo.imagenUrlPromo || promo.imagen_url_promo
+                  || promo.imagenVehiculoUrl || promo.imagen_vehiculo_url;
 
-                    <div className="position-absolute top-0 end-0 bg-danger text-white px-3 py-1 fw-bold rounded-bottom-start shadow" style={{ zIndex: 2 }}>
-                      {promo.tipoDescuento === 'PORCENTAJE' ? `${promo.valorDescuento}% OFF` : `OFERTA`}
-                    </div>
+                return (
+                  <div key={promo.id} className="col-12 col-md-6 col-lg-4">
+                    <div className="card h-100 bg-black border-secondary shadow-lg rounded-3 overflow-hidden position-relative">
 
-                    <img
-                      src={promo.imagenUrlPromo || promo.imagenVehiculoUrl}
-                      className="card-img-top"
-                      alt={promo.modeloVehiculo}
-                      style={{ height: '220px', objectFit: 'cover' }}
-                    />
-
-                    <div className="card-body d-flex flex-column p-3 text-white">
-                      {/* Fila superior con Nombre, Marca y Categoría */}
-                      <div className="d-flex justify-content-between align-items-start mb-1">
-                        <h5 className="fw-bold mb-0 text-truncate me-2" title={`${promo.marcaVehiculo} ${promo.modeloVehiculo}`}>
-                          {promo.marcaVehiculo} <span className="text-white-50">{promo.modeloVehiculo}</span>
-                        </h5>
-                        <span className="badge bg-secondary text-uppercase" style={{ fontSize: '0.65rem' }}>
-                          {promo.categoriaVehiculo}
-                        </span>
+                      <div className="position-absolute top-0 end-0 bg-danger text-white px-3 py-1 fw-bold rounded-bottom-start shadow" style={{ zIndex: 2 }}>
+                        {promo.tipoDescuento === 'PORCENTAJE' ? `${promo.valorDescuento}% OFF` : `OFERTA`}
                       </div>
 
-                      {/* Sección de precios */}
-                      <div className="mb-3 mt-4">
-                        {promo.precioOriginal && (
-                          <span className="text-decoration-line-through badge bg-secondary text-uppercase text-muted small me-2">
-                            ${Number(promo.precioOriginal).toLocaleString('es-MX')}
-                          </span>
-                        )}
-                        {promo.precioFinal && (
-                          <span className="text-success fw-bold fs-5">
-                            ${Number(promo.precioFinal).toLocaleString('es-MX')}
-                          </span>
-                        )}
-                      </div>
+                      <img
+                        src={imagenPromo}
+                        className="card-img-top"
+                        alt={promo.modeloVehiculo}
+                        style={{ height: '220px', objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://placehold.co/600x220?text=Sin+Imagen';
+                        }}
+                      />
 
-                      <div className="mt-auto d-flex gap-2">
-                        <button className="btn btn-danger w-50 fw-bold">COTIZAR</button>
-                        <Link to={`/catalogo/${promo.vehiculoId}`} className="btn btn-outline-light w-50 fw-bold">
-                          SABER MÁS <i className="bi bi-arrow-right ms-1"></i>
-                        </Link>
+                      <div className="card-body d-flex flex-column p-3 text-white">
+                        {/* Fila superior con Nombre, Marca y Categoría */}
+                        <div className="d-flex justify-content-between align-items-start mb-1">
+                          <h5 className="fw-bold mb-0 text-truncate me-2" title={`${promo.marcaVehiculo} ${promo.modeloVehiculo}`}>
+                            {promo.marcaVehiculo} <span className="text-white-50">{promo.modeloVehiculo}</span>
+                          </h5>
+                          <span className="badge bg-secondary text-uppercase" style={{ fontSize: '0.65rem' }}>
+                            {promo.categoriaVehiculo}
+                          </span>
+                        </div>
+
+                        {/* Sección de precios */}
+                        <div className="mb-3 mt-4">
+                          {promo.precioOriginal && (
+                            <span className="text-decoration-line-through badge bg-secondary text-uppercase text-muted small me-2">
+                              ${Number(promo.precioOriginal).toLocaleString('es-MX')}
+                            </span>
+                          )}
+                          {promo.precioFinal && (
+                            <span className="text-success fw-bold fs-5">
+                              ${Number(promo.precioFinal).toLocaleString('es-MX')}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mt-auto d-flex gap-2">
+                          <button className="btn btn-danger w-50 fw-bold">COTIZAR</button>
+                          <Link to={`/catalogo/${promo.vehiculoId}`} className="btn btn-outline-light w-50 fw-bold">
+                            SABER MÁS <i className="bi bi-arrow-right ms-1"></i>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
       )}
 
       {/* =========================================
-          4. SECCIÓN SERVICIOS (La que ya tenías)
+          4. SECCIÓN SERVICIOS
       ========================================= */}
       <section id="servicios" className="py-5 bg-light border-bottom border-light">
         <div className="container py-4">
@@ -249,4 +297,4 @@ export default function Index() {
       </section>
     </div>
   );
-} 
+}

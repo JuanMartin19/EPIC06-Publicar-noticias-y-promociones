@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Logo from '../assets/images/logo.jpg';
+import Logo from '../assets/images/logo.png';
 import { getMarcas } from '../api/vehiculosApi';
 import './PublicHeader.css';
 
@@ -45,7 +45,7 @@ export default function PublicHeader() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary shadow-sm py-3">
         <div className="container-fluid px-4">
           <Link className="navbar-brand d-flex align-items-center p-0" to="/">
-            <img src={Logo} alt="Logo" width="100" height="55" />
+            <img src={Logo} alt="Logo" width="175" height="75" />
           </Link>
 
           {/* Botón de colapso para móviles */}
